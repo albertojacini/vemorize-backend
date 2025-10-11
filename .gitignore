@@ -1,0 +1,40 @@
+# Environment variables
+.env
+.env.local
+*.env
+
+# Supabase
+.branches
+.temp
+supabase/.branches
+supabase/.temp
+
+# Deno
+.deno/
+deno.lock
+
+# Dependencies
+node_modules/
+
+# Logs
+*.log
+logs/
+
+# Editor directories
+.vscode/
+.idea/
+*.swp
+*.swo
+*~
+
+# OS files
+.DS_Store
+Thumbs.db
+
+# Build artifacts
+dist/
+build/
+
+# Backup files
+*.bak
+*.backup
