@@ -1,4 +1,4 @@
-import { UserPreferences } from '../entities/user-preferences';
+import { UserPreferences } from '../entities/user-preferences.ts';
 
 export interface UserPreferencesRepository {
   /**

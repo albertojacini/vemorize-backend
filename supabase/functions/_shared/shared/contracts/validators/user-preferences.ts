@@ -1,4 +1,4 @@
-import { z } from "zod";
+import { z } from "npm:zod@3";
 
 const ttsModelSchema = z.enum(['local', 'cloud']);
 

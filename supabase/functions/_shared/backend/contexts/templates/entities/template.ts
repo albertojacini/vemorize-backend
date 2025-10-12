@@ -1,7 +1,7 @@
 import {
   TemplateData,
   CreateTemplateCommand,
-} from '@/shared/contracts/base-interfaces/templates';
+} from '../../../../shared/contracts/base-interfaces/templates.ts';
 
 export class Template {
   constructor(

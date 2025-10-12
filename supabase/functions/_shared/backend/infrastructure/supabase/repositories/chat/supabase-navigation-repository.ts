@@ -1,7 +1,7 @@
-import { NavigationRepository } from '@/backend/contexts/chat/repositories/navigation-repository';
-import { Navigation } from '@/backend/contexts/chat/entities/navigation';
-import { NavigationMapper } from '@/backend/infrastructure/mappers/navigation-mapper';
-import type { SupabaseClient } from '@supabase/supabase-js';
+import { NavigationRepository } from '../../../../contexts/chat/repositories/navigation-repository.ts';
+import { Navigation } from '../../../../contexts/chat/entities/navigation.ts';
+import { NavigationMapper } from '../../../mappers/navigation-mapper.ts';
+import type { SupabaseClient } from 'npm:@supabase/supabase-js@2';
 
 /**
  * Supabase implementation of the Navigation repository

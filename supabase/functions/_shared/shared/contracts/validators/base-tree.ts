@@ -1,4 +1,4 @@
-import { z } from "zod";
+import { z } from "npm:zod@3";
 
 // Base schemas that contain all the common validation logic
 // These are extended by course-tree.ts and template-tree.ts

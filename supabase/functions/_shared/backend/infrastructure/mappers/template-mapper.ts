@@ -4,10 +4,10 @@
  * Following Clean Architecture: Infrastructure → Domain (correct dependency flow)
  */
 
-import { TemplateData } from '@/shared/contracts/base-interfaces/templates';
-import { TemplateData as TemplateDbData } from '@/shared/contracts/db/templates';
-import { TemplateApiResponse } from '@shared/contracts/api/templates';
-import { TemplateTreeMapper } from './template-tree-mapper';
+import { TemplateData } from '../../../shared/contracts/base-interfaces/templates.ts';
+import { TemplateData as TemplateDbData } from '../../../shared/contracts/db/templates.ts';
+import { TemplateApiResponse } from '../../../shared/contracts/api/templates.ts';
+import { TemplateTreeMapper } from './template-tree-mapper.ts';
 
 export class TemplateMapper {
   

@@ -1,6 +1,6 @@
-import { CourseTree } from '@/backend/contexts/courses/entities/course-tree';
-import { NodeData } from '@/shared/contracts/base-interfaces/course-tree';
-import { BaseTreeRepository } from '@/backend/contexts/shared/repositories/base-tree-repository';
+import { CourseTree } from '../entities/course-tree.ts';
+import { NodeData } from '../../../../shared/contracts/base-interfaces/course-tree.ts';
+import { BaseTreeRepository } from '../../shared/repositories/base-tree-repository.ts';
 
 // Repository interface - defines contract for course data access
 export interface CourseTreeRepository extends BaseTreeRepository<CourseTree<NodeData>, NodeData> {

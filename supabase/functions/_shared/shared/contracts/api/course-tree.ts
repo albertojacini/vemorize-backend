@@ -1,7 +1,7 @@
 import {
   NodeWithChildrenData,
   CreateCourseTreeCommand,
-} from '@/shared/contracts/base-interfaces/course-tree';
+} from '../base-interfaces/course-tree.ts';
 
 type CreateCourseTreeApiRequest = CreateCourseTreeCommand;
 

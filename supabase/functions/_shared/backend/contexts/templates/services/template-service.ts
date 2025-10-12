@@ -1,10 +1,10 @@
-import { Template, TemplateTree } from '@/backend/contexts/templates/entities';
-import { TemplateRepository } from '@/backend/contexts/templates/repositories/template-repository';
-import { TemplateTreeRepository } from '@/backend/contexts/templates/repositories/template-tree-repository';
-import { CreateTemplateCommand, UpdateTemplateCommand } from '@/shared/contracts/base-interfaces/templates';
-import { CreateTemplateTreeCommand } from '@/shared/contracts/base-interfaces/template-tree';
-import { CreateTemplateTreeApiRequest } from '@/shared/contracts/api/template-tree';
-import { createTemplateTreeSchema } from '@/shared/contracts/validators/template-tree';
+import { Template, TemplateTree } from '../entities/index.ts';
+import { TemplateRepository } from '../repositories/template-repository.ts';
+import { TemplateTreeRepository } from '../repositories/template-tree-repository.ts';
+import { CreateTemplateCommand, UpdateTemplateCommand } from '../../../../shared/contracts/base-interfaces/templates.ts';
+import { CreateTemplateTreeCommand } from '../../../../shared/contracts/base-interfaces/template-tree.ts';
+import { CreateTemplateTreeApiRequest } from '../../../../shared/contracts/api/template-tree.ts';
+import { createTemplateTreeSchema } from '../../../../shared/contracts/validators/template-tree.ts';
 
 export class TemplateService {
   constructor(

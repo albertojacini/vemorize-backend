@@ -1,12 +1,12 @@
-import { ChatOpenAI } from "@langchain/openai";
-import { tool } from '@langchain/core/tools';
-import { HumanMessage, SystemMessage, AIMessage, BaseMessage } from "@langchain/core/messages";
+import { ChatOpenAI } from "npm:@langchain/openai";
+import { tool } from 'npm:@langchain/core/tools';
+import { HumanMessage, SystemMessage, AIMessage, BaseMessage } from "npm:@langchain/core/messages";
 
-import { StateGraph, END } from "@langchain/langgraph";
-import { TOOL_CONFIGS } from "@/shared/config/tools";
-import { ApiLLMContext, ApiLLMRequest, ApiLLMResponse } from "@/shared/contracts/api/chat";
-import { ToolCall, ToolName } from "@/shared/config/tools";
-import { Mode } from "@/shared/types/chat";
+import { StateGraph, END } from "npm:@langchain/langgraph";
+import { TOOL_CONFIGS } from "../../../shared/config/tools.ts";
+import { ApiLLMContext, ApiLLMRequest, ApiLLMResponse } from "../../../shared/contracts/api/chat.ts";
+import { ToolCall, ToolName } from "../../../shared/config/tools.ts";
+import { Mode } from "../../../shared/types/chat.ts";
 
 
 

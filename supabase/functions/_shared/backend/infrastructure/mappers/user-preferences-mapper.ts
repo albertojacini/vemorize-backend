@@ -4,9 +4,9 @@
  * Following Clean Architecture: Infrastructure → Domain (correct dependency flow)
  */
 
-import { UserPreferencesData } from '@/shared/contracts/base-interfaces/user-preferences';
-import { UserPreferencesData as UserPreferencesDbData } from '@/shared/contracts/db/user-preferences';
-import { UserPreferencesApiResponse } from '@/shared/contracts/api/user-preferences';
+import { UserPreferencesData } from '../../../shared/contracts/base-interfaces/user-preferences.ts';
+import { UserPreferencesData as UserPreferencesDbData } from '../../../shared/contracts/db/user-preferences.ts';
+import { UserPreferencesApiResponse } from '../../../shared/contracts/api/user-preferences.ts';
 
 export class UserPreferencesMapper {
 

@@ -1,7 +1,7 @@
 import {
   CreateTemplateCommand,
   UpdateTemplateCommand,
-} from '@/shared/contracts/base-interfaces/templates';
+} from '../base-interfaces/templates.ts';
 
 type CreateTemplateApiRequest = CreateTemplateCommand;
 type UpdateTemplateApiRequest = UpdateTemplateCommand;

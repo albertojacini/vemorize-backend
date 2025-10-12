@@ -1,5 +1,5 @@
 
-import { NavigationData } from '@/shared/contracts/base-interfaces/navigation';
+import { NavigationData } from '../../../../shared/contracts/base-interfaces/navigation.ts';
 
 /**
  * Navigation - Entity within Course aggregate for tracking user navigation state

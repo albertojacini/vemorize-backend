@@ -1,7 +1,7 @@
-import { Mode } from '@/shared/types/chat';
-import { ToolName } from '@/shared/config/tools';
-import { ToolCall } from '@/shared/config/tools';
-import { z } from 'zod';
+import { Mode } from '../../types/chat.ts';
+import { ToolName } from '../../config/tools.ts';
+import { ToolCall } from '../../config/tools.ts';
+import { z } from 'npm:zod@3';
 
 // TTS Request Schema
 export const ttsRequestSchema = z.object({
@@ -74,7 +74,7 @@ export type ApiLLMContext = z.infer<typeof apiLLMContextSchema>;
 // Enhanced LLM Request Schema (more strict than ApiLLMRequest)
 export const apiLLMDataSchema = z.object({
   courseId: z.string().min(1, 'Course ID is required'),
-  userId: z.string().min(1, 'User ID is required'),
+  userId: z.string().min(1, 'User ID is required').optional(), // Optional - extracted from auth token in edge function
 });
 
 export type ApiLLMDataType = z.infer<typeof apiLLMDataSchema>;

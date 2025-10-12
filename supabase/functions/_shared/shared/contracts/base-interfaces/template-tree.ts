@@ -6,7 +6,7 @@ import {
   TemplateCodeLeafNodeSchema,
   createTemplateTreeSchema,
   TemplateNodeWithChildrenSchema
-} from '@/shared/contracts/validators/template-tree';
+} from '../validators/template-tree.ts';
 
 // container node type
 type ContainerNodeData = z.infer<typeof TemplateContainerNodeSchema>;

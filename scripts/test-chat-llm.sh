@@ -24,8 +24,7 @@ REQUEST_BODY='{
     "userMemory": "User is new to the app"
   },
   "data": {
-    "courseId": "test-course-id-123",
-    "userId": "test-user-id-456"
+    "courseId": "test-course-id-123"
   }
 }'
 

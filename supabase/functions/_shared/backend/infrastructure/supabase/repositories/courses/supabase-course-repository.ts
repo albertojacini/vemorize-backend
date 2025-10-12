@@ -1,11 +1,11 @@
 import {
   Course,
   QuizRound,
-} from '@/backend/contexts/courses/entities';
+} from '../../../../../contexts/courses/entities/index.ts';
 import {
   CourseRepository
-} from '@/backend/contexts/courses/repositories/course-repository';
-import { CourseMapper } from '@/backend/infrastructure/mappers/course-mapper';
+} from '../../../../../contexts/courses/repositories/course-repository.ts';
+import { CourseMapper } from '../../../mappers/course-mapper.ts';
 import type { SupabaseClient } from '@supabase/supabase-js';
 
 export class SupabaseCourseRepository implements CourseRepository {

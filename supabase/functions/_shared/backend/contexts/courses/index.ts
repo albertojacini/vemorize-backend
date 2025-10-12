@@ -1,3 +1,3 @@
-export * from './entities';
-export * from './services/course-service';
-export * from './repositories/annotation-repository';
+export * from './entities/index.ts';
+export * from './services/course-service.ts';
+export * from './repositories/annotation-repository.ts';

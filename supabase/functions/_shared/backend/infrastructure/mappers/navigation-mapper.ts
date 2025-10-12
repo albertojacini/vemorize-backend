@@ -4,9 +4,9 @@
  * Following Clean Architecture: Infrastructure → Domain (correct dependency flow)
  */
 
-import { NavigationData } from '@/shared/contracts/base-interfaces/navigation';
-import { SessionData } from '@/shared/contracts/db/courses';
-import { ApiNavigationResponse } from '@shared/contracts/api/chat';
+import { NavigationData } from '../../../shared/contracts/base-interfaces/navigation.ts';
+import { SessionData } from '../../../shared/contracts/db/courses.ts';
+import { ApiNavigationResponse } from '../../../shared/contracts/api/chat.ts';
 
 export class NavigationMapper {
   

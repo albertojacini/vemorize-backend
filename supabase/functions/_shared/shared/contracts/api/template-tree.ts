@@ -1,7 +1,7 @@
 import {
   NodeWithChildrenData,
   CreateTemplateTreeCommand,
-} from '@/shared/contracts/base-interfaces/template-tree';
+} from '../base-interfaces/template-tree.ts';
 
 type CreateTemplateTreeApiRequest = CreateTemplateTreeCommand;
 

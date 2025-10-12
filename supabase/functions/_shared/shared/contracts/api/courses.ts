@@ -1,7 +1,7 @@
 import {
   CreateCourseCommand,
   UpdateCourseCommand,
-} from '@/shared/contracts/base-interfaces/courses';
+} from '../base-interfaces/courses.ts';
 
 type CreateCourseApiRequest = CreateCourseCommand;
 type UpdateCourseApiRequest = UpdateCourseCommand;

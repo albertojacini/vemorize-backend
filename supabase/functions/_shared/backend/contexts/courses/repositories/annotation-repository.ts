@@ -1,4 +1,4 @@
-import { Annotation } from '@/backend/contexts/courses/entities/annotation';
+import { Annotation } from '../entities/annotation.ts';
 
 // Repository interface - defines contract for annotation data access
 export interface AnnotationRepository {

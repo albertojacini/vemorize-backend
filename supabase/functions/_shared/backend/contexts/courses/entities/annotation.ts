@@ -3,7 +3,7 @@ import {
   AnnotationData,
   CreateAnnotationCommand,
   MemorizationState,
-} from '@/shared/contracts/base-interfaces/annotations';
+} from '../../../../shared/contracts/base-interfaces/annotations.ts';
 
 
 export class Annotation {

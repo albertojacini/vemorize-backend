@@ -1,3 +1,3 @@
 // Domain entities for the Chat bounded context
-export * from './navigation';
-export * from './user-preferences';
+export * from './navigation.ts';
+export * from './user-preferences.ts';

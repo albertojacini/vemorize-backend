@@ -1,13 +1,13 @@
-import { HumanMessage, AIMessage, SystemMessage, BaseMessage } from "@langchain/core/messages";
-import { ConversationRepository } from '@/backend/contexts/chat/repositories/conversation-repository';
-import { Conversation } from '@/backend/contexts/chat/entities/conversation';
-import { CreateConversationCommand } from '@/shared/contracts/base-interfaces/conversations';
-import { UserPreferencesRepository } from "@/backend/contexts/chat/repositories/user-preferences-repository";
-import { NavigationRepository } from "@/backend/contexts/chat/repositories/navigation-repository";
-import { Navigation } from "@/backend/contexts/chat/entities/navigation";
-import { NavigationUpdateRequestParamsType } from "@/shared/contracts/api/chat";
-import { UserPreferences } from "@/backend/contexts/chat/entities/user-preferences";
-import type { CreateUserPreferencesCommand, UpdateUserPreferencesCommand } from '@/shared/contracts/base-interfaces/user-preferences';
+import { HumanMessage, AIMessage, SystemMessage, BaseMessage } from "npm:@langchain/core/messages";
+import { ConversationRepository } from '../repositories/conversation-repository.ts';
+import { Conversation } from '../entities/conversation.ts';
+import { CreateConversationCommand } from '../../../../shared/contracts/base-interfaces/conversations.ts';
+import { UserPreferencesRepository } from "../repositories/user-preferences-repository.ts";
+import { NavigationRepository } from "../repositories/navigation-repository.ts";
+import { Navigation } from "../entities/navigation.ts";
+import { NavigationUpdateRequestParamsType } from "../../../../shared/contracts/api/chat.ts";
+import { UserPreferences } from "../entities/user-preferences.ts";
+import type { CreateUserPreferencesCommand, UpdateUserPreferencesCommand } from '../../../../shared/contracts/base-interfaces/user-preferences.ts';
 
 
 export class ChatService {

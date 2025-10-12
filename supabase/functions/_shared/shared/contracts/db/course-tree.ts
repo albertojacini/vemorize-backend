@@ -3,7 +3,7 @@
  * Database representation shared between frontend and backend
  */
 
-import { NodeType, LeafType } from '@/shared/contracts/base-interfaces/course-tree';
+import { NodeType, LeafType } from '../base-interfaces/course-tree.ts';
 
 // Node database representation (snake_case for database)
 export interface NodeDbData {

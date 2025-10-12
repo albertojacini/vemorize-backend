@@ -4,9 +4,9 @@
  * Following Clean Architecture: Infrastructure → Domain (correct dependency flow)
  */
 
-import { AnnotationData } from '@/shared/contracts/base-interfaces/annotations';
-import { AnnotationData as AnnotationDbData } from '@/shared/contracts/db/annotations';
-import { AnnotationApiResponse } from '@/shared/contracts/api/annotations';
+import { AnnotationData } from '../../../shared/contracts/base-interfaces/annotations.ts';
+import { AnnotationData as AnnotationDbData } from '../../../shared/contracts/db/annotations.ts';
+import { AnnotationApiResponse } from '../../../shared/contracts/api/annotations.ts';
 
 export class AnnotationMapper {
   

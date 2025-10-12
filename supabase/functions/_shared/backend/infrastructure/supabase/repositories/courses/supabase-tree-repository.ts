@@ -1,9 +1,9 @@
-import { CourseTree } from '@/backend/contexts/courses/entities/course-tree';
+import { CourseTree } from '../../../../../contexts/courses/entities/course-tree.ts';
 import type { SupabaseClient } from '@supabase/supabase-js';
-import { CourseTreeRepository } from '@/backend/contexts/courses/repositories/course-tree-repository';
-import { NodeData } from '@/shared/contracts/base-interfaces/course-tree';
-import { CourseTreeMapper } from '@/backend/infrastructure/mappers/course-tree-mapper';
-import { RepositoryUtils } from '@/backend/contexts/shared/repositories/base-tree-repository';
+import { CourseTreeRepository } from '../../../../../contexts/courses/repositories/course-tree-repository.ts';
+import { NodeData } from '../../../../../../shared/contracts/base-interfaces/course-tree.ts';
+import { CourseTreeMapper } from '../../../mappers/course-tree-mapper.ts';
+import { RepositoryUtils } from '../../../../../contexts/shared/repositories/base-tree-repository.ts';
   
 export class SupabaseCourseTreeRepository implements CourseTreeRepository {
   protected supabase: SupabaseClient;

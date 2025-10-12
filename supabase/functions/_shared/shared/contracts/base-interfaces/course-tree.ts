@@ -6,7 +6,7 @@ import {
   CourseCodeLeafNodeSchema,
   CourseNodeWithChildrenSchema,
   createCourseTreeSchema
-} from '@/shared/contracts/validators/course-tree';
+} from '../validators/course-tree.ts';
 
 // container node type
 type ContainerNodeData = z.infer<typeof CourseContainerNodeSchema>;

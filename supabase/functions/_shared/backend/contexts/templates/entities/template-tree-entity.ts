@@ -1,4 +1,4 @@
-import { z } from 'zod';
+import { z } from 'npm:zod@3';
 import type {
   NodeData,
   NodeWithChildrenData,
@@ -7,14 +7,14 @@ import type {
   LanguageVocabularyLeafNodeData,
   CodeLeafNodeData,
   LeafNodeData,
-} from '@/shared/contracts/base-interfaces/template-tree';
+} from '../../../../shared/contracts/base-interfaces/template-tree.ts';
 import {
   TemplateContainerNodeSchema,
   TemplateTextLeafNodeSchema,
   TemplateLanguageVocabularyLeafNodeSchema,
   TemplateCodeLeafNodeSchema,
-} from '@/shared/contracts/validators/template-tree';
-import { TreeOperations, DtoConversionUtils } from '@/backend/contexts/shared/entities/base-tree';
+} from '../../../../shared/contracts/validators/template-tree.ts';
+import { TreeOperations, DtoConversionUtils } from '../../shared/entities/base-tree.ts';
 
 // Template-specific tree node class
 class TemplateTree<T extends NodeData> {

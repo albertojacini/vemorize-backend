@@ -1,4 +1,4 @@
-import { Navigation } from '../entities/navigation';
+import { Navigation } from '../entities/navigation.ts';
 
 /**
  * Repository interface for Navigation entity

@@ -1,3 +1,3 @@
 // Domain entities for the Templates bounded context
-export * from './template-tree-entity';
-export * from './template'; 
+export * from './template-tree-entity.ts';
+export * from './template.ts'; 

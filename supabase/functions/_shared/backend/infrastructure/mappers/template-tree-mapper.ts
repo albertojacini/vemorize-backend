@@ -3,8 +3,8 @@
  * Handles serialization/deserialization without polluting domain entities
  */
 
-import { TemplateNodeData } from '@/shared/contracts/db/templates';
-import { NodeData, LeafNodeData, NodeWithChildrenData } from '@/shared/contracts/base-interfaces/template-tree';
+import { TemplateNodeData } from '../../../shared/contracts/db/templates.ts';
+import { NodeData, LeafNodeData, NodeWithChildrenData } from '../../../shared/contracts/base-interfaces/template-tree.ts';
 
 export class TemplateTreeMapper {
   /**

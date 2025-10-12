@@ -1,10 +1,10 @@
-import { z } from "zod";
+import { z } from "npm:zod@3";
 import {
   BaseContainerNodeSchema,
   BaseTextLeafSchema,
   BaseLanguageVocabularyLeafSchema,
   BaseCodeLeafSchema
-} from './base-tree';
+} from './base-tree.ts';
 
 
 export const TemplateContainerNodeSchema = BaseContainerNodeSchema.extend({

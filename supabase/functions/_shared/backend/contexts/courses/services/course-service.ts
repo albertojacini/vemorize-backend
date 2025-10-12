@@ -1,12 +1,12 @@
-import { Course, CourseTree, QuizRound } from '../entities';
-import { Annotation } from '../entities/annotation';
-import { MemorizationState } from '@/shared/contracts/base-interfaces/annotations';
-import type { CreateAnnotationCommand, UpdateAnnotationCommand } from '@/shared/contracts/base-interfaces/annotations';
-import type { CreateCourseCommand, UpdateCourseCommand } from '@/shared/contracts/base-interfaces/courses';
-import { CourseRepository } from '@/backend/contexts/courses/repositories/course-repository';
-import { AnnotationRepository } from '@/backend/contexts/courses/repositories/annotation-repository';
-import { CourseTreeRepository } from '@/backend/contexts/courses/repositories/course-tree-repository';
-import { CreateCourseTreeApiRequest } from '@/shared/contracts/api/course-tree';
+import { Course, CourseTree, QuizRound } from '../entities/index.ts';
+import { Annotation } from '../entities/annotation.ts';
+import { MemorizationState } from '../../../../shared/contracts/base-interfaces/annotations.ts';
+import type { CreateAnnotationCommand, UpdateAnnotationCommand } from '../../../../shared/contracts/base-interfaces/annotations.ts';
+import type { CreateCourseCommand, UpdateCourseCommand } from '../../../../shared/contracts/base-interfaces/courses.ts';
+import { CourseRepository } from '../repositories/course-repository.ts';
+import { AnnotationRepository } from '../repositories/annotation-repository.ts';
+import { CourseTreeRepository } from '../repositories/course-tree-repository.ts';
+import { CreateCourseTreeApiRequest } from '../../../../shared/contracts/api/course-tree.ts';
 
 // Application service for course operations
 export class CourseService {

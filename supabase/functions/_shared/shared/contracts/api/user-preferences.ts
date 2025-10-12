@@ -2,7 +2,7 @@ import {
   CreateUserPreferencesCommand,
   UpdateUserPreferencesCommand,
   TtsModel,
-} from '@/shared/contracts/base-interfaces/user-preferences';
+} from '../base-interfaces/user-preferences.ts';
 
 type CreateUserPreferencesApiRequest = CreateUserPreferencesCommand;
 type UpdateUserPreferencesApiRequest = UpdateUserPreferencesCommand;

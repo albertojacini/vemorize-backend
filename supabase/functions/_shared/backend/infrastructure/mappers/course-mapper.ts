@@ -4,9 +4,9 @@
  * Following Clean Architecture: Infrastructure → Domain (correct dependency flow)
  */
 
-import { CourseData } from '@/shared/contracts/base-interfaces/courses';
-import { CourseDbData } from '@/shared/contracts/db/courses';
-import { CourseApiResponse } from '@/shared/contracts/api/courses';
+import { CourseData } from '../../../shared/contracts/base-interfaces/courses.ts';
+import { CourseDbData } from '../../../shared/contracts/db/courses.ts';
+import { CourseApiResponse } from '../../../shared/contracts/api/courses.ts';
 
 export class CourseMapper {
 

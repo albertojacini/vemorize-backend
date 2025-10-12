@@ -3,8 +3,8 @@
  * Handles serialization/deserialization without polluting domain entities
  */
 
-import { NodeDbData } from '@/shared/contracts/db/course-tree';
-import { NodeData, LeafNodeData, NodeWithChildrenData } from '@/shared/contracts/base-interfaces/course-tree';
+import { NodeDbData } from '../../../shared/contracts/db/course-tree.ts';
+import { NodeData, LeafNodeData, NodeWithChildrenData } from '../../../shared/contracts/base-interfaces/course-tree.ts';
 
 export class CourseTreeMapper {
   /**

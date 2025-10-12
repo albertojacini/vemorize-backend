@@ -3,7 +3,7 @@ import {
   CreateAnnotationCommand,
   UpdateAnnotationCommand,
   MemorizationState,
-} from '@/shared/contracts/base-interfaces/annotations';
+} from '../base-interfaces/annotations.ts';
 
 type CreateAnnotationApiRequest = CreateAnnotationCommand;
 type UpdateAnnotationApiRequest = UpdateAnnotationCommand;

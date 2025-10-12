@@ -1,4 +1,4 @@
-import { Template } from '@/backend/contexts/templates/entities';
+import { Template } from '../entities/index.ts';
 
 
 // Repository interface - defines contract for template data access

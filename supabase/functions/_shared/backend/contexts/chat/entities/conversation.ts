@@ -1,7 +1,7 @@
 import {
   ConversationData,
   CreateConversationCommand,
-} from '@/shared/contracts/base-interfaces/conversations';
+} from '../../../../shared/contracts/base-interfaces/conversations.ts';
 
 export class Conversation {
   constructor(

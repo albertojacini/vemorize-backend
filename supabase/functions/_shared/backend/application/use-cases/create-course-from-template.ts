@@ -1,11 +1,11 @@
-import { CourseRepository } from "@/backend/contexts/courses/repositories/course-repository";
-import { TemplateRepository } from "@/backend/contexts/templates/repositories/template-repository";
-import { CourseTreeRepository } from "@/backend/contexts/courses/repositories/course-tree-repository";
-import { Course } from "@/backend/contexts/courses/entities/course";
-import { CreateCourseFromTemplateApiRequest } from "@/shared/contracts/api/courses";
-import { TemplateTreeRepository } from "@/backend/contexts/templates/repositories/template-tree-repository";
-import { CourseTree } from "@/backend/contexts/courses/entities/course-tree";
-import { CreateCourseCommand } from "@/shared/contracts/base-interfaces/courses";
+import { CourseRepository } from "../../../contexts/courses/repositories/course-repository.ts";
+import { TemplateRepository } from "../../../contexts/templates/repositories/template-repository.ts";
+import { CourseTreeRepository } from "../../../contexts/courses/repositories/course-tree-repository.ts";
+import { Course } from "../../../contexts/courses/entities/course.ts";
+import { CreateCourseFromTemplateApiRequest } from "../../../../shared/contracts/api/courses.ts";
+import { TemplateTreeRepository } from "../../../contexts/templates/repositories/template-tree-repository.ts";
+import { CourseTree } from "../../../contexts/courses/entities/course-tree.ts";
+import { CreateCourseCommand } from "../../../../shared/contracts/base-interfaces/courses.ts";
 import { v4 as uuidv4 } from 'uuid';
 
 

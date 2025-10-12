@@ -1,5 +1,5 @@
-import { BaseMessage } from "@langchain/core/messages";
-import { Conversation } from '@/backend/contexts/chat/entities/conversation';
+import { BaseMessage } from "npm:@langchain/core/messages";
+import { Conversation } from '../entities/conversation.ts';
 
 // Message types
 export interface DBMessage {

@@ -4,9 +4,9 @@
  * Following Clean Architecture: Infrastructure → Domain (correct dependency flow)
  */
 
-import { ConversationData } from '@/shared/contracts/base-interfaces/conversations';
-import { ConversationDbRow } from '@/shared/contracts/db/conversations';
-import { ConversationApiResponse } from '@/shared/contracts/api/conversations';
+import { ConversationData } from '../../../shared/contracts/base-interfaces/conversations.ts';
+import { ConversationDbRow } from '../../../shared/contracts/db/conversations.ts';
+import { ConversationApiResponse } from '../../../shared/contracts/api/conversations.ts';
 
 export class ConversationMapper {
 

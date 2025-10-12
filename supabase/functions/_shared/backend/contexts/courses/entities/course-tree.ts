@@ -1,4 +1,4 @@
-import { z } from 'zod';
+import { z } from 'npm:zod@3';
 import type {
   NodeData,
   NodeWithChildrenData,
@@ -7,14 +7,14 @@ import type {
   LanguageVocabularyLeafNodeData,
   CodeLeafNodeData,
   LeafNodeData,
-} from '@/shared/contracts/base-interfaces/course-tree';
+} from '../../../../shared/contracts/base-interfaces/course-tree.ts';
 import {
   CourseContainerNodeSchema,
   CourseTextLeafNodeSchema,
   CourseLanguageVocabularyLeafNodeSchema,
   CourseCodeLeafNodeSchema,
-} from '@/shared/contracts/validators/course-tree';
-import { TreeOperations, DtoConversionUtils } from '@/backend/contexts/shared/entities/base-tree';
+} from '../../../../shared/contracts/validators/course-tree.ts';
+import { TreeOperations, DtoConversionUtils } from '../../shared/entities/base-tree.ts';
 
 // Course-specific tree node class
 class CourseTree<T extends NodeData> {

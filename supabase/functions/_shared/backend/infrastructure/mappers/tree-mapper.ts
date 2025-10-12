@@ -8,7 +8,7 @@
 import {
   CourseTree,
   CourseTreeFactory
-} from '@/backend/contexts/courses/entities';
+} from '../../../contexts/courses/entities/index.ts';
 
 export class TreeMapper {
 

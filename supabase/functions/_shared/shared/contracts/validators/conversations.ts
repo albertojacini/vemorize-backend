@@ -1,4 +1,4 @@
-import { z } from 'zod';
+import { z } from 'npm:zod@3';
 
 export const createConversationSchema = z.object({
   userId: z.string().min(1, 'User ID is required'),

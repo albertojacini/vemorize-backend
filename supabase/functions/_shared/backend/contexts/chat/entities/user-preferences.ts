@@ -3,7 +3,7 @@ import {
   UserPreferencesData,
   CreateUserPreferencesCommand,
   TtsModel,
-} from '@/shared/contracts/base-interfaces/user-preferences';
+} from '../../../../shared/contracts/base-interfaces/user-preferences.ts';
 
 export class UserPreferences {
   constructor(

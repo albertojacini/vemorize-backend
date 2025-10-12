@@ -1,6 +1,6 @@
 // Quiz domain entities for the Learning bounded context
 
-import { CourseTree } from './course-tree';
+import { CourseTree } from './course-tree.ts';
 import { v4 as uuidv4 } from 'uuid';
 
 

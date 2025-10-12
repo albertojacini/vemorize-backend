@@ -2,7 +2,7 @@
 import {
   CourseData,
   CreateCourseCommand,
-} from '@/shared/contracts/base-interfaces/courses';
+} from '../../../../shared/contracts/base-interfaces/courses.ts';
 
 
 export class Course {

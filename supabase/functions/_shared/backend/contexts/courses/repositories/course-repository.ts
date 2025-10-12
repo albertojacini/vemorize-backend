@@ -1,5 +1,5 @@
-import { Course, QuizRound } from '@/backend/contexts/courses/entities';
-import { Navigation } from '@/backend/contexts/chat/entities';
+import { Course, QuizRound } from '../entities/index.ts';
+import { Navigation } from '../../chat/entities/index.ts';
 
 
 // Repository interface - defines contract for course data access

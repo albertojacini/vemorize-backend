@@ -3,10 +3,10 @@
 
 import { createClient } from 'https://esm.sh/@supabase/supabase-js@2'
 import { corsHeaders } from '../_shared/cors.ts'
-import type { ApiLLMRequest } from '../_shared/chat-types.ts'
-import { LLMService } from './application/llm-service.ts'
+import { ApiLLMRequestSchema } from '../_shared/shared/contracts/api/chat.ts'
+import { LLMService } from '../_shared/backend/application/use-cases/llm-service.ts'
 import { createChatService } from './infrastructure/chat-service-factory.ts'
-import { ToolName, ProvideChatResponseArgs } from '../_shared/tools.ts'
+import { ToolName, ProvideChatResponseArgs } from '../_shared/shared/config/tools.ts'
 
 console.log('chat-llm function loaded')
 
@@ -42,15 +42,33 @@ Deno.serve(async (req) => {
     } = await supabaseClient.auth.getUser()
 
     if (authError || !user) {
-      return new Response(JSON.stringify({ error: 'Unauthorized' }), {
+      return new Response(JSON.stringify({
+        success: false,
+        error: 'Unauthorized',
+        toolCalls: []
+      }), {
         status: 401,
         headers: { ...corsHeaders, 'Content-Type': 'application/json' },
       })
     }
 
     // Parse and validate request body
-    const body: ApiLLMRequest = await req.json()
-    const { llmContext, data } = body
+    const body = await req.json()
+    const validation = ApiLLMRequestSchema.safeParse(body)
+
+    if (!validation.success) {
+      return new Response(JSON.stringify({
+        success: false,
+        error: 'Invalid request data',
+        details: validation.error.errors,
+        toolCalls: []
+      }), {
+        status: 400,
+        headers: { ...corsHeaders, 'Content-Type': 'application/json' },
+      })
+    }
+
+    const { llmContext, data } = validation.data
     const { courseId } = data
     const userId = user.id
 
@@ -91,7 +109,10 @@ Deno.serve(async (req) => {
 
     // Return response in expected format
     return new Response(JSON.stringify({
-      toolCalls: result.toolCalls || [],
+      success: true,
+      data: {
+        toolCalls: result.toolCalls || [],
+      }
     }), {
       headers: { ...corsHeaders, 'Content-Type': 'application/json' },
       status: 200,
@@ -101,6 +122,7 @@ Deno.serve(async (req) => {
     console.error('Error in chat-llm function:', error)
     return new Response(
       JSON.stringify({
+        success: false,
         error: error.message || 'Internal server error',
         toolCalls: []
       }),

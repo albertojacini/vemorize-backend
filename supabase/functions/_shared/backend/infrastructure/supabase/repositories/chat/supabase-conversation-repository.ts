@@ -1,8 +1,8 @@
-import { SupabaseClient } from '@supabase/supabase-js';
-import { ConversationRepository, DBMessage, CreateMessageData } from '@/backend/contexts/chat/repositories/conversation-repository';
-import { Conversation } from '@/backend/contexts/chat/entities/conversation';
-import { ConversationMapper } from '@/backend/infrastructure/mappers/conversation-mapper';
-import { ConversationDbRow } from '@/shared/contracts/db/conversations';
+import { SupabaseClient } from 'npm:@supabase/supabase-js@2';
+import { ConversationRepository, DBMessage, CreateMessageData } from '../../../../contexts/chat/repositories/conversation-repository.ts';
+import { Conversation } from '../../../../contexts/chat/entities/conversation.ts';
+import { ConversationMapper } from '../../../mappers/conversation-mapper.ts';
+import { ConversationDbRow } from '../../../../shared/contracts/db/conversations.ts';
 import {
   BaseMessage,
   HumanMessage,
@@ -10,7 +10,7 @@ import {
   SystemMessage,
   ToolMessage,
   FunctionMessage
-} from '@langchain/core/messages';
+} from 'npm:@langchain/core/messages';
 
 export class SupabaseConversationRepository implements ConversationRepository {
   constructor(private supabase: SupabaseClient) {}

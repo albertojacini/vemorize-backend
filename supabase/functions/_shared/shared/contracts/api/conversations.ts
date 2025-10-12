@@ -1,7 +1,7 @@
 import {
   CreateConversationCommand,
   UpdateConversationCommand,
-} from '@/shared/contracts/base-interfaces/conversations';
+} from '../base-interfaces/conversations.ts';
 
 type CreateConversationApiRequest = CreateConversationCommand;
 type UpdateConversationApiRequest = UpdateConversationCommand;
