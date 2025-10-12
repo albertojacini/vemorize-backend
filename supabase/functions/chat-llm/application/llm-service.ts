@@ -7,9 +7,9 @@ import { HumanMessage, SystemMessage, AIMessage, BaseMessage } from "npm:@langch
 import { StateGraph, END } from "npm:@langchain/langgraph@0.2.33"
 
 // Import shared types (using relative paths for Deno)
-import type { ApiLLMContext, ApiLLMResponse } from '../../../../shared/contracts/api/chat.ts'
-import { TOOL_CONFIGS, ToolCall, ToolName } from '../../../../shared/config/tools.ts'
-import { Mode } from '../../../../shared/types/chat.ts'
+import type { ApiLLMContext, ApiLLMResponse } from '../../_shared/chat-types.ts'
+import { Mode } from '../../_shared/chat-types.ts'
+import { TOOL_CONFIGS, ToolCall, ToolName } from '../../_shared/tools.ts'
 
 export interface WorkflowState extends ApiLLMContext {
   toolCalls: ToolCall[]

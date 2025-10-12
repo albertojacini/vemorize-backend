@@ -3,10 +3,10 @@
 
 import { createClient } from 'https://esm.sh/@supabase/supabase-js@2'
 import { corsHeaders } from '../_shared/cors.ts'
-import type { ApiLLMRequest } from '../_shared/types.ts'
+import type { ApiLLMRequest } from '../_shared/chat-types.ts'
 import { LLMService } from './application/llm-service.ts'
 import { createChatService } from './infrastructure/chat-service-factory.ts'
-import { ToolName, ProvideChatResponseArgs } from '../../../shared/config/tools.ts'
+import { ToolName, ProvideChatResponseArgs } from '../_shared/tools.ts'
 
 console.log('chat-llm function loaded')
 
@@ -57,7 +57,7 @@ Deno.serve(async (req) => {
     console.log(`Processing LLM request for user ${userId}, course ${courseId}`)
     console.log(`Mode: ${llmContext.mode}, Message: "${llmContext.userMessage}"`)
 
-    // Initialize chat service following DDD
+    // Initialize chat service
     const chatService = createChatService(supabaseClient)
 
     // Get or create conversation

@@ -1,16 +1,48 @@
-// Factory to create ChatService with Supabase repositories
-// Adapted for Deno edge function
+// Simplified chat service for edge function
+// Avoids importing full backend code with @/ aliases
 
 import { SupabaseClient } from 'https://esm.sh/@supabase/supabase-js@2'
-import { ChatService } from '../../../../backend/contexts/chat/services/chat-service.ts'
-import { SupabaseConversationRepository } from '../../../../backend/infrastructure/supabase/repositories/chat/supabase-conversation-repository.ts'
-import { SupabaseNavigationRepository } from '../../../../backend/infrastructure/supabase/repositories/chat/supabase-navigation-repository.ts'
-import { SupabaseUserPreferencesRepository } from '../../../../backend/infrastructure/supabase/repositories/chat/supabase-user-preferences-repository.ts'
+import { HumanMessage, AIMessage, BaseMessage } from "npm:@langchain/core@0.3.28/messages"
+import { ConversationRepository, Conversation } from './repositories.ts'
+
+export class ChatService {
+  private conversationRepo: ConversationRepository
+
+  constructor(supabaseClient: SupabaseClient) {
+    this.conversationRepo = new ConversationRepository(supabaseClient)
+  }
+
+  async getOrCreateConversation(userId: string, courseId: string): Promise<Conversation> {
+    return this.conversationRepo.getOrCreateConversation(userId, courseId)
+  }
+
+  async getConversationMessages(conversationId: string): Promise<BaseMessage[]> {
+    return this.conversationRepo.getLangchainMessages(conversationId)
+  }
+
+  async addMessageToConversation(
+    conversation: Conversation,
+    userMessage: string,
+    aiResponse: string
+  ): Promise<void> {
+    // Create LangChain messages
+    const humanMessage = new HumanMessage(userMessage)
+    const aiMessage = new AIMessage(aiResponse)
+
+    // Store messages
+    await this.conversationRepo.storeLangchainMessages(
+      conversation.id,
+      [humanMessage, aiMessage]
+    )
+
+    // Update conversation metadata
+    conversation.messageCount += 2
+    conversation.lastMessageAt = new Date()
+
+    await this.conversationRepo.updateConversation(conversation)
+  }
+}
 
 export function createChatService(supabaseClient: SupabaseClient): ChatService {
-  return new ChatService(
-    new SupabaseConversationRepository(supabaseClient),
-    new SupabaseNavigationRepository(supabaseClient),
-    new SupabaseUserPreferencesRepository(supabaseClient)
-  )
+  return new ChatService(supabaseClient)
 }
