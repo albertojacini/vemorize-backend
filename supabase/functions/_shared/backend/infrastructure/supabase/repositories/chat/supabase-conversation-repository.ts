@@ -2,7 +2,7 @@ import { SupabaseClient } from 'npm:@supabase/supabase-js@2';
 import { ConversationRepository, DBMessage, CreateMessageData } from '../../../../contexts/chat/repositories/conversation-repository.ts';
 import { Conversation } from '../../../../contexts/chat/entities/conversation.ts';
 import { ConversationMapper } from '../../../mappers/conversation-mapper.ts';
-import { ConversationDbRow } from '../../../../shared/contracts/db/conversations.ts';
+import { ConversationDbRow } from '../../../../../shared/contracts/db/conversations.ts';
 import {
   BaseMessage,
   HumanMessage,

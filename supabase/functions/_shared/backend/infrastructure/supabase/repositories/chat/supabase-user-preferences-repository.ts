@@ -1,7 +1,7 @@
 import { SupabaseClient } from 'npm:@supabase/supabase-js@2';
 import { UserPreferences } from '../../../../contexts/chat/entities/user-preferences.ts';
 import { UserPreferencesRepository } from '../../../../contexts/chat/repositories/user-preferences-repository.ts';
-import { UserPreferencesData } from '../../../../shared/contracts/db/user-preferences.ts';
+import { UserPreferencesData } from '../../../../../shared/contracts/db/user-preferences.ts';
 import { UserPreferencesMapper } from '../../../mappers/user-preferences-mapper.ts';
 
 export class SupabaseUserPreferencesRepository implements UserPreferencesRepository {
