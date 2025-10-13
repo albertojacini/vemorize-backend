@@ -206,5 +206,3 @@ IDLE MODE TOOL REQUIREMENTS:
 
 
 }
-
-export const llmService = new LLMService();
