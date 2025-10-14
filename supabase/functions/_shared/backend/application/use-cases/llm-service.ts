@@ -124,16 +124,19 @@ IDLE MODE TOOL REQUIREMENTS:
         return `Tool ${t.name} executed with args: ${JSON.stringify(args)}`;
       },
       {name: t.name, description: t.description, schema: t.schema}));
-    
+
     console.debug('LLMService.callModel > tools', tools);
-    
+
+    // Force the LLM to call tools using tool_choice parameter
     const llm = new ChatOpenAI({
-      model: "gpt-4o",
-      temperature: 0,
-    }).bindTools(tools);
-    
+      model: "gpt-5-mini",
+      // temperature: 0,
+    }).bindTools(tools, {
+      tool_choice: "required" // Force at least one tool call
+    });
+
     const systemPrompt = this.generateSystemPrompt(state);
-    
+
     const messages = [
       new SystemMessage(systemPrompt),
       ...state.messages,
@@ -149,7 +152,7 @@ IDLE MODE TOOL REQUIREMENTS:
     });
     const response = await llm.invoke(messages);
     // console.debug('LLMService.callModel > response', response);
-    
+
     return {
       messages: [response],
     };

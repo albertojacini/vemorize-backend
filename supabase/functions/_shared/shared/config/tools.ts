@@ -43,7 +43,7 @@ export interface ToolConfig {
 export const TOOL_CONFIGS: Record<ToolName, ToolConfig> = {
     [ToolName.PROVIDE_CHAT_RESPONSE]: {
         name: ToolName.PROVIDE_CHAT_RESPONSE,
-        description: 'Provide a chat response to the user. This should always be called.',
+        description: 'MANDATORY: Provide a chat response message to the user. You MUST call this tool in EVERY response to communicate with the user. This is the only way to send messages to the user.',
         schema: PROVIDE_CHAT_RESPONSE_SCHEMA,
         scope: 'global',
     },
