@@ -81,14 +81,14 @@ CRITICAL: Every response must include provide_chat_response + any other necessar
         modeSpecificPrompt = `
 Current Mode: QUIZ
 You are managing a quiz session. Available tools:
-- provideChatResponse - MANDATORY for every response
+- provide_chat_response - MANDATORY for every response
 - setIncomingVoiceExpectedLang - Call BEFORE asking questions in foreign languages
 - storeQuizResponse - Call when user provides an answer
 - finishQuiz - Call when quiz should end
 - exitMode - Call to leave quiz mode
 
 QUIZ MODE TOOL REQUIREMENTS:
-- ALWAYS call provideChatResponse
+- ALWAYS call provide_chat_response
 - ADDITIONALLY call other tools as needed for quiz functionality`;
         break;
         
@@ -96,10 +96,10 @@ QUIZ MODE TOOL REQUIREMENTS:
         modeSpecificPrompt = `
 Current Mode: READING
 You are helping the user navigate through reading content.
-Available navigation tools: readCurrent, nextContent, previousContent, jumpToSection
+
 
 READING MODE TOOL REQUIREMENTS:
-- ALWAYS call provideChatResponse
+- ALWAYS call provide_chat_response
 - ADDITIONALLY call navigation tools as needed for content management`;
         break;
         
@@ -110,7 +110,7 @@ The user is not in any specific activity mode.
 Help them start an activity with switchMode or answer general questions.
 
 IDLE MODE TOOL REQUIREMENTS:
-- ALWAYS call provideChatResponse
+- ALWAYS call provide_chat_response
 - ADDITIONALLY call switchMode or other tools as needed for user requests`;
         break;
     }
@@ -156,24 +156,55 @@ IDLE MODE TOOL REQUIREMENTS:
   }
 
   private async executeTools(state: WorkflowState): Promise<Partial<WorkflowState>> {
+
     const lastMessage = state.messages[state.messages.length - 1];
     const toolCalls: ToolCall[] = [];
-    
-    if (lastMessage instanceof AIMessage && lastMessage.tool_calls) {
-      for (const toolCall of lastMessage.tool_calls) {
-        console.debug('LLMService.executeTools > toolCall', toolCall);
-        const toolName = toolCall.name;
-        const toolArgs = toolCall.args;
-        
-        if (!toolName) continue;
-        
-        toolCalls.push({
-          tool: toolName as ToolName,
-          args: toolArgs || {},
-        });
+
+    console.log('🔍 LLMService.executeTools - START');
+    console.log('📦 Last message type:', lastMessage?.constructor.name);
+
+    // Check if message is an AI message by constructor name or presence of tool_calls
+    // Using instanceof doesn't work reliably in Deno due to module loading issues
+    const isAIMessage = lastMessage?.constructor.name === 'AIMessage' ||
+                        (lastMessage instanceof AIMessage) ||
+                        ('tool_calls' in lastMessage);
+
+    console.log('🛠️  Is AI message?', isAIMessage);
+
+    if (isAIMessage && 'tool_calls' in lastMessage) {
+      const messageToolCalls = (lastMessage as any).tool_calls;
+      console.log('🛠️  tool_calls exists?', !!messageToolCalls);
+      console.log('🛠️  tool_calls length:', messageToolCalls?.length);
+      console.log('🛠️  tool_calls:', JSON.stringify(messageToolCalls, null, 2));
+
+      if (messageToolCalls && Array.isArray(messageToolCalls)) {
+        for (const toolCall of messageToolCalls) {
+          console.log('⚙️  Processing tool call:', toolCall.name, 'with args:', toolCall.args);
+          const toolName = toolCall.name;
+          const toolArgs = toolCall.args;
+
+          if (!toolName) {
+            console.log('⚠️  Skipping tool call with no name');
+            continue;
+          }
+
+          const toolCallObj = {
+            tool: toolName as ToolName,
+            args: toolArgs || {},
+          };
+          console.log('✅ Pushing tool call:', JSON.stringify(toolCallObj, null, 2));
+          toolCalls.push(toolCallObj);
+        }
+      } else {
+        console.log('⚠️  No tool_calls array found');
       }
+    } else {
+      console.log('⚠️  Last message is not an AI message or has no tool_calls property');
     }
-    
+
+    console.log('📤 Returning toolCalls count:', toolCalls.length);
+    console.log('📤 Returning toolCalls:', JSON.stringify(toolCalls, null, 2));
+
     return { toolCalls };
   }
 
