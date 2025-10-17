@@ -226,7 +226,7 @@ CREATE TABLE IF NOT EXISTS chat_user_memory (
 CREATE TABLE IF NOT EXISTS user_preferences (
   id UUID PRIMARY KEY,
   user_id UUID NOT NULL REFERENCES auth.users(id) ON DELETE CASCADE,
-  default_tts_model TEXT NOT NULL CHECK (default_tts_model IN ('local', 'cloud')),
+  default_tts_model TEXT NOT NULL CHECK (default_tts_model IN ('local', 'openai-gpt-4o-mini')),
   default_speech_speed REAL NOT NULL CHECK (default_speech_speed >= 0.5 AND default_speech_speed <= 1.5),
   reading_speech_speed REAL NOT NULL DEFAULT 0.8 CHECK (reading_speech_speed >= 0.5 AND reading_speech_speed <= 1.5),
   created_at TIMESTAMPTZ NOT NULL DEFAULT NOW(),

@@ -1,4 +1,4 @@
-type TtsModel = 'local' | 'cloud';
+type TtsModel = 'local' | 'openai-gpt-4o-mini';
 
 interface UserPreferencesData {
   id: string;

@@ -129,8 +129,7 @@ IDLE MODE TOOL REQUIREMENTS:
 
     // Force the LLM to call tools using tool_choice parameter
     const llm = new ChatOpenAI({
-      model: "gpt-5-mini",
-      // temperature: 0,
+      model: "gpt-5"
     }).bindTools(tools, {
       tool_choice: "required" // Force at least one tool call
     });

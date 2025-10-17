@@ -31,3 +31,10 @@ export type {
   ApiNavigationResponse,
   ApiUpdateNavigationRequest
 } from './chat';
+
+export type {
+  TtsRequest,
+  TtsErrorResponse
+} from './tts';
+
+export { ttsRequestSchema } from './tts';
