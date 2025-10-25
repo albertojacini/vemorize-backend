@@ -1,0 +1,17 @@
+title: "German Greetings Course"
+description: |
+  A comprehensive beginner-level German language course covering fundamental greetings 
+  and basic social interactions. This course focuses on the essential vocabulary and 
+  phrases needed for polite communication in German-speaking countries.
+  
+  Students will learn:
+  - Formal and informal greetings
+  - Time-based greetings (good morning, good evening, etc.)
+  - How to introduce themselves and others
+  - Basic polite expressions and responses
+  - Cultural context for different greeting situations
+
+supportedLeafTypes: 
+  - language_vocabulary
+  - text
+maxDepth: 2 

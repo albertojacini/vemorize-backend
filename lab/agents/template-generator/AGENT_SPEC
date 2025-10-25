@@ -1,0 +1,23 @@
+Starting with the existing structure, help me build a course generator agent that does the following:
+
+1. Upload a specification using the path (specs/<filename>.md) provided as a parameter by the command line
+2. Generate level 1 of the skeleton based on the course specification
+3. Go through every node of level 1 and generate the next level nodes in parallel as a sequence of children that can be either containers or leaves
+4. Repeat step 3 for successive levels until all nodes are leaves or max depth of 5 is reached (after which all should be leaves)
+5. Once the whole skeleton is completed, run a checker that looks for duplications, inconsistencies, and possible improvements in the skeleton
+6. Store the final result to a simple YAML file
+
+Guidelines:
+- Start with the files in lab/agenst/template-generator/
+- Use LangGraph for orchestration
+- Use LLMs (GPT-4o-mini) to generate nodes with a maximum of 5 parallel LLM calls
+- A skeleton container contains a sequence of items that can be either other containers or leaves
+- The skeleton can potentially be very large (a general language course could be up to 5,000 nodes)
+- Don't implement error handling or retry mechanisms - errors should break the pipeline
+- Keep specs simple for now with just course title and description
+- The LLM should decide the type of children nodes based on topic size and other factors
+- The check phase should only check for duplications and missing logical progressions
+- For development mode with --max-items: when generating children for a new node, mark new container nodes after max-items limit as 'dead' nodes (add dead: bool field to container nodes) and don't iterate over them in subsequent steps
+
+Please give an outline of your plan before proceeding with the implementation.
+Ask me any questions you need to clarify the plan.

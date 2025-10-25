@@ -1,0 +1,11 @@
+title: "Italian Top 100 Verbs"
+description: |
+  A simple stricly vocabulary course for memorizing the top 100 most essential verbs in Italian. 
+  
+  Course Structure:
+  - 2 levels
+  - Level 1: circa 10 chapters with thematic titles like "Essential Being & Having" (essere, avere, fare, stare etc.) or "Communication & Senses" (andare, venire, fare etc.). Champters should be a container for level-2 chapters
+  - Level 2: approximately 10 vocabulary nodes in every level-1 chapter, where every node is simply named after the lemma and will contain a full declination of the lemma. Level-2 must be composed of leaf nodes only.
+  
+  Learning Objectives:
+  - Master the 100 most common Italian verbs with their full forms and conjugations

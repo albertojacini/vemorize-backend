@@ -1,0 +1,21 @@
+title: "German Complete Course"
+description: |
+  A comprehensive beginner-level German language course covering fundamental vocabulary, 
+  basic grammar structures, and essential communication skills. 
+  
+  The course is designed for complete beginners and focuses on practical, everyday 
+  German that students can immediately use in real-world situations. Students will 
+  learn to introduce themselves, ask for directions, order food, and handle basic 
+  conversations in German.
+  
+  Key learning objectives:
+  - Master essential German vocabulary (500+ words)
+  - Understand basic German grammar patterns
+  - Develop confidence in speaking and listening
+  - Learn cultural context and etiquette
+  - Build a foundation for intermediate German study
+
+supportedLeafTypes: 
+  - language_vocabulary
+  - text
+maxDepth: 5 

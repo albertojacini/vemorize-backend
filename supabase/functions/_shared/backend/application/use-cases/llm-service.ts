@@ -150,7 +150,7 @@ IDLE MODE TOOL REQUIREMENTS:
       }
     });
     const response = await llm.invoke(messages);
-    // console.debug('LLMService.callModel > response', response);
+    console.debug('LLMService.callModel > response', response);
 
     return {
       messages: [response],
