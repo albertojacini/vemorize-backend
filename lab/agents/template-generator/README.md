@@ -22,10 +22,10 @@ Generate a template DTO from a specification file:
 
 ```bash
 # From /lab directory
-npm run generate-template specs/german-greetings.yml
+npm run generate-template agents/template-generator/specs/german-greetings.yml
 
 # With limited items (for testing)
-npm run generate-template specs/german-greetings.yml -- --max-items 2
+npm run generate-template agents/template-generator/specs/german-greetings.yml -- --max-items 2
 ```
 
 This creates a JSON file in `output/` directory containing template and tree DTOs.
