@@ -17,9 +17,10 @@ import type {
 } from './types/api-contracts';
 import { isValidTemplateDTOFile as validateDTOFile } from './types/api-contracts';
 
-// Load environment variables
-config({ path: resolve(process.cwd(), '.env.local') });
-config({ path: resolve(process.cwd(), '.env') });
+// Load environment variables from project root
+// When run from /lab directory via npm, go up one level to project root
+config({ path: resolve(process.cwd(), '../.env.local') });
+config({ path: resolve(process.cwd(), '../.env') });
 
 // Configuration
 const SUPABASE_URL = process.env.SUPABASE_URL || 'http://127.0.0.1:54321';

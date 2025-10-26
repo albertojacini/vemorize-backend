@@ -1,4 +1,4 @@
-import { z } from 'zod';
+import { z } from 'npm:zod@^3.24';
 import {
   TemplateContainerNodeSchema,
   TemplateTextLeafNodeSchema,

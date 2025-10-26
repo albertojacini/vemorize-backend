@@ -1,8 +1,8 @@
-import { TemplateTree } from '../../../../../contexts/templates/entities/template-tree-entity.ts';
+import { TemplateTree } from '../../../../../backend/contexts/templates/entities/template-tree-entity.ts';
 import type { SupabaseClient } from '@supabase/supabase-js';
-import { TemplateTreeRepository } from '../../../../../contexts/templates/repositories/template-tree-repository.ts';
-import { NodeData } from '../../../../../../shared/contracts/base-interfaces/template-tree.ts';
-import { RepositoryUtils } from '../../../../../contexts/shared/repositories/base-tree-repository.ts';
+import { TemplateTreeRepository } from '../../../../../backend/contexts/templates/repositories/template-tree-repository.ts';
+import { NodeData } from '../../../../../shared/contracts/base-interfaces/template-tree.ts';
+import { RepositoryUtils } from '../../../../../backend/contexts/shared/repositories/base-tree-repository.ts';
 import { TemplateTreeMapper } from '../../../mappers/template-tree-mapper.ts';
 
 export class SupabaseTemplateTreeRepository implements TemplateTreeRepository {

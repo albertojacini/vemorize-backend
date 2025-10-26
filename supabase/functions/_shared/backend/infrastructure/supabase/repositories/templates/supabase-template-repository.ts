@@ -1,6 +1,6 @@
-import { Template } from '../../../../../contexts/templates/entities/index.ts';
-import { TemplateRepository } from '../../../../../contexts/templates/repositories/template-repository.ts';
-import { TemplateData } from '../../../../../../shared/contracts/db/templates.ts';
+import { Template } from '../../../../../backend/contexts/templates/entities/index.ts';
+import { TemplateRepository } from '../../../../../backend/contexts/templates/repositories/template-repository.ts';
+import { TemplateData } from '../../../../../shared/contracts/db/templates.ts';
 import { TemplateMapper } from '../../../mappers/template-mapper.ts';
 import type { SupabaseClient } from '@supabase/supabase-js';
 
