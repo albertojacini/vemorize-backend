@@ -8,6 +8,14 @@ import { Command } from 'commander';
 import { readFile } from 'fs/promises';
 import { resolve } from 'path';
 import { config } from 'dotenv';
+import type {
+  TemplateDTOFile,
+  ApiResponse,
+  CreateTemplateResponse,
+  CreateTemplateTreeResponse,
+  isValidTemplateDTOFile,
+} from './types/api-contracts';
+import { isValidTemplateDTOFile as validateDTOFile } from './types/api-contracts';
 
 // Load environment variables
 config({ path: resolve(process.cwd(), '.env.local') });
@@ -69,13 +77,17 @@ program
       log('yellow', 'Step 1: Reading DTO file...');
       const filePath = resolve(process.cwd(), file);
       const fileContent = await readFile(filePath, 'utf-8');
-      const dtoData = JSON.parse(fileContent);
+      const dtoData: unknown = JSON.parse(fileContent);
 
-      if (!dtoData.template || !dtoData.tree) {
+      // Type validation with type guard
+      if (!validateDTOFile(dtoData)) {
         log('red', '✗ Invalid DTO file format');
         log('blue', 'Expected format: { template: {...}, tree: {...} }');
         process.exit(1);
       }
+
+      // Now dtoData is properly typed as TemplateDTOFile
+      const typedDTO: TemplateDTOFile = dtoData;
 
       log('green', `✓ Read DTO: ${dtoData.template.title}`);
       console.log('');
@@ -88,14 +100,19 @@ program
           'Authorization': `Bearer ${token}`,
           'Content-Type': 'application/json',
         },
-        body: JSON.stringify(dtoData.template),
+        body: JSON.stringify(typedDTO.template),
       });
 
-      const templateResult = await templateResponse.json();
+      const templateResult: ApiResponse<CreateTemplateResponse> = await templateResponse.json();
 
       if (!templateResponse.ok || !templateResult.success) {
         log('red', `✗ Failed to create template (HTTP ${templateResponse.status})`);
         console.log(JSON.stringify(templateResult, null, 2));
+        process.exit(1);
+      }
+
+      if (!templateResult.data) {
+        log('red', '✗ No template data in response');
         process.exit(1);
       }
 
@@ -108,7 +125,7 @@ program
 
       // Use the server-returned template ID instead of client-generated one
       const treePayload = {
-        ...dtoData.tree,
+        ...typedDTO.tree,
         templateId: createdTemplateId
       };
 
@@ -121,7 +138,7 @@ program
         body: JSON.stringify(treePayload),
       });
 
-      const treeResult = await treeResponse.json();
+      const treeResult: ApiResponse<CreateTemplateTreeResponse> = await treeResponse.json();
 
       if (!treeResponse.ok || !treeResult.success) {
         log('red', `✗ Failed to create template tree (HTTP ${treeResponse.status})`);
@@ -140,8 +157,8 @@ program
       console.log('');
       console.log('Summary:');
       console.log(`- Template ID: ${createdTemplateId}`);
-      console.log(`- Title: ${dtoData.template.title}`);
-      console.log(`- Description: ${dtoData.template.description || '(none)'}`);
+      console.log(`- Title: ${typedDTO.template.title}`);
+      console.log(`- Description: ${typedDTO.template.description || '(none)'}`);
       console.log('');
 
     } catch (error) {

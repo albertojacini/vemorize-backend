@@ -10,10 +10,10 @@ config({ path: resolve(process.cwd(), '../../../.env.local') });
 
 import { graph } from './graph';
 import { SkeletonToTemplateConverter } from './converters';
-import { CreateTemplateCommand } from '@/shared/contracts/base-interfaces/templates';
-import { CreateTemplateTreeCommand } from '@/shared/contracts/base-interfaces/template-tree';
 import { writeFile, mkdir } from 'fs/promises';
 import { join, dirname } from 'path';
+import type { TemplateDTOFile } from '../../types/api-contracts';
+import type { CreateTemplateCommand, CreateTemplateTreeCommand } from '@/shared/contracts/base-interfaces/templates';
 
 
 // Create CLI instance
@@ -97,8 +97,8 @@ program
         treeData: templateTreeData
       };
 
-      // Combine both DTOs into single output file
-      const outputData = {
+      // Combine both DTOs into single output file with proper typing
+      const outputData: TemplateDTOFile = {
         template: templateDTO,
         tree: treeDTO
       };
