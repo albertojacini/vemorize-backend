@@ -5,8 +5,10 @@ import { config } from 'dotenv';
 import { resolve } from 'path';
 import { Command } from 'commander';
 
-// Load .env.local from project root (two levels up from this file)
-config({ path: resolve(process.cwd(), '../../../.env.local') });
+// Load environment variables from project root
+// When run from /lab directory via npm, go up one level to project root
+config({ path: resolve(process.cwd(), '../.env.local') });
+config({ path: resolve(process.cwd(), '../.env') });
 
 import { graph } from './graph';
 import { SkeletonToTemplateConverter } from './converters';
