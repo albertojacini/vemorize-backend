@@ -1,0 +1,18 @@
+{
+  "name": "vemorize-lab",
+  "version": "0.1.0",
+  "description": "Lab tools and agents for Vemorize backend development",
+  "private": true,
+  "type": "module",
+  "scripts": {
+    "generate-template": "tsx agents/template-generator/cli.ts generate",
+    "admin": "tsx admin-cli.ts"
+  },
+  "keywords": [
+    "vemorize",
+    "template-generator",
+    "admin-tools"
+  ],
+  "author": "",
+  "license": "UNLICENSED"
+}

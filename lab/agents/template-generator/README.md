@@ -1,4 +1,136 @@
+# Template Generator Agent
 
+AI-powered agent that generates course templates from specification files using LLM-based content generation.
+
+## Quick Start
+
+### 1. Setup Authentication
+
+First, obtain a JWT token for local Supabase:
+
+```bash
+# From project root
+./scripts/get-local-token.sh
+
+# Add the token to .env.local
+echo 'SUPABASE_USER_TOKEN="<your-token>"' >> .env.local
+```
+
+### 2. Generate Template
+
+Generate a template DTO from a specification file:
+
+```bash
+# From /lab directory
+npm run generate-template specs/german-greetings.yml
+
+# With limited items (for testing)
+npm run generate-template specs/german-greetings.yml -- --max-items 2
+```
+
+This creates a JSON file in `output/` directory containing template and tree DTOs.
+
+### 3. Save to Database
+
+Save the generated template via edge function API:
+
+```bash
+# From /lab directory
+npm run admin save-template output/german-greetings-course.template.json
+```
+
+## Workflow Overview
+
+```
+┌─────────────────┐
+│ Spec File (yml) │
+└────────┬────────┘
+         │
+         ▼
+┌─────────────────┐
+│ Generate Agent  │  (LLM-powered content generation)
+└────────┬────────┘
+         │
+         ▼
+┌─────────────────┐
+│ DTO File (json) │  (template + tree structure)
+└────────┬────────┘
+         │
+         ▼
+┌─────────────────┐
+│   Admin CLI     │  (HTTP POST to edge functions)
+└────────┬────────┘
+         │
+         ▼
+┌─────────────────┐
+│    Database     │  (validated & persisted)
+└─────────────────┘
+```
+
+## Prerequisites
+
+- Local Supabase running (`supabase start`)
+- Edge functions deployed or served locally
+- Authentication token configured
+- OpenAI API key in `.env.local`
+
+## Output Format
+
+Generated DTO files contain two objects matching edge function contracts:
+
+```json
+{
+  "template": {
+    "title": "Course Title",
+    "description": "Course description"
+  },
+  "tree": {
+    "templateId": "uuid",
+    "treeData": {
+      "id": "root-id",
+      "nodeType": "container",
+      "title": "Root",
+      "children": [...]
+    }
+  }
+}
+```
+
+## CLI Options
+
+### Generate Template
+
+```bash
+npm run generate-template <spec-file> [options]
+
+Options:
+  --max-items <number>  Limit items per level (for development/testing)
+```
+
+### Save Template
+
+```bash
+npm run admin save-template <dto-file> [options]
+
+Options:
+  --token <jwt>  Override SUPABASE_USER_TOKEN env var
+```
+
+## Troubleshooting
+
+**"No authentication token found"**
+- Run `./scripts/get-local-token.sh`
+- Add token to `.env.local`
+
+**"Worker failed to boot"**
+- Deploy edge functions: `supabase functions deploy templates`
+- Or serve locally: `supabase functions serve`
+
+**Validation errors**
+- Check DTO structure matches edge function schemas
+- Review error details in CLI output
+
+---
 
 # General Leaf Specification
 
