@@ -1,0 +1,5 @@
+# Generated template DTO files
+*.json
+
+# Keep the directory in git but ignore generated content
+!.gitignore

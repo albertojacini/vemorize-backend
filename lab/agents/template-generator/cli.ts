@@ -10,12 +10,10 @@ config({ path: resolve(process.cwd(), '../../../.env.local') });
 
 import { graph } from './graph';
 import { SkeletonToTemplateConverter } from './converters';
-import { TemplateService } from '@/backend/contexts/templates/services/template-service';
-import { SupabaseTemplateRepository } from '@/backend/infrastructure/supabase/repositories/templates/supabase-template-repository';
-import { SupabaseTemplateTreeRepository } from '@/backend/infrastructure/supabase/repositories/templates/supabase-template-tree-repository';
-import { createCLIClient } from '@/utils/supabase/clients/cli';
 import { CreateTemplateCommand } from '@/shared/contracts/base-interfaces/templates';
 import { CreateTemplateTreeCommand } from '@/shared/contracts/base-interfaces/template-tree';
+import { writeFile, mkdir } from 'fs/promises';
+import { join, dirname } from 'path';
 
 
 // Create CLI instance
@@ -53,10 +51,6 @@ program
       console.log(`Spec File: ${specFile}`);
       console.log('');
 
-      // Initialize repository inside the action
-      const templateRepository = new SupabaseTemplateRepository(createCLIClient());
-      const templateTreeRepository = new SupabaseTemplateTreeRepository(createCLIClient());
-
       // Convert markdown filename to JSON filename
       const jsonSpecFile = specFile.replace(/\.md$/, '.json');
       
@@ -78,10 +72,9 @@ program
       console.log(`Duration: ${duration} seconds`);
       console.log(`Final skeleton nodes: ${result.skeleton.nodeCount}`);
 
-      // Create CourseTemplate instance directly since we already have the TemplateTree
+      // Generate template ID client-side
       const templateId = crypto.randomUUID();
-      const now = new Date();
-      
+
       // Convert skeleton to domain template using the actual template ID
       const converter = new SkeletonToTemplateConverter(templateId);
       const templateTreeData = converter.convert(result.skeleton, result.specs.title);
@@ -91,27 +84,51 @@ program
         process.exit(1);
       }
 
-      const courseTemplateData: CreateTemplateCommand = {
+      // Create DTOs matching edge function API contracts
+      const templateDTO: CreateTemplateCommand = {
         title: result.specs.title,
         description: result.specs.description ?? undefined,
         templateFamilyId: undefined,
         version: result.specs.version || '1.0.0'
       };
-      const treeData: CreateTemplateTreeCommand = {
+
+      const treeDTO: CreateTemplateTreeCommand = {
         templateId: templateId,
         treeData: templateTreeData
       };
-      const templateService = new TemplateService(templateRepository, templateTreeRepository);
-      const savedTemplate = await templateService.createTemplateWithTree(courseTemplateData, treeData);
-      
-      console.log(`✅ Template saved to database with ID: ${savedTemplate.id}`);
+
+      // Combine both DTOs into single output file
+      const outputData = {
+        template: templateDTO,
+        tree: treeDTO
+      };
+
+      // Generate output filename from template title
+      const sanitizeFilename = (title: string): string => {
+        return title
+          .toLowerCase()
+          .replace(/[^a-z0-9]+/g, '-')
+          .replace(/^-+|-+$/g, '');
+      };
+
+      const outputFilename = `${sanitizeFilename(templateDTO.title)}.template.json`;
+      const outputPath = join(dirname(specFile), '../output', outputFilename);
+
+      // Ensure output directory exists
+      await mkdir(dirname(outputPath), { recursive: true });
+
+      // Write DTO to file
+      await writeFile(outputPath, JSON.stringify(outputData, null, 2), 'utf-8');
+
+      console.log(`✅ Template DTO saved to: ${outputPath}`);
 
       console.log('');
       console.log('Summary:');
       console.log(`- Course: ${result.specs.title}`);
       console.log(`- Levels Generated: ${result.currentLevel}`);
       console.log(`- Total Nodes: ${result.nodeCount}`);
-      console.log(`- Template ID: ${savedTemplate.id}`);
+      console.log(`- Template ID: ${templateId}`);
+      console.log(`- Output File: ${outputFilename}`);
 
       if (result.validation) {
         console.log(`- Validation: ${result.validation.isValid ? 'PASSED' : 'ISSUES FOUND'}`);
@@ -120,6 +137,11 @@ program
         }
       }
 
+      console.log('');
+      console.log('');
+      console.log('Next steps:');
+      console.log('1. Review the generated DTO file');
+      console.log(`2. Save to database: npm run admin save-template output/${outputFilename}`);
       console.log('');
       console.log('🎉 Template generation completed!');
 
