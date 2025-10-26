@@ -54,18 +54,20 @@ Instrucution should provide guide on:
 - anything alse that can guide the generation process
 `);
 
-const skeletonRootModel = new ChatOpenAI({
-    model: "gpt-4o",
-    temperature: 0
-}).withStructuredOutput(planSchema);
-
 type PlanInput = {
     title: string;
     description: string;
 }
 
+// Lazy initialization to ensure env vars are loaded
+const getModel = () => new ChatOpenAI({
+    model: "gpt-4o",
+    temperature: 0
+}).withStructuredOutput(planSchema);
+
 
 export const planWithLLM = async (input: PlanInput) => {
+    const skeletonRootModel = getModel();
     const prompt = await planTemplate.invoke({
         title: input.title,
         description: input.description

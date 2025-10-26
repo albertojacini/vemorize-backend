@@ -26,18 +26,20 @@ Course Title: {title}
 Course Description: {description}
 `);
 
-const skeletonRootModel = new ChatOpenAI({
-    model: "gpt-4o-mini",
-    temperature: 0
-}).withStructuredOutput(createSkeletonRootSchema);
-
 type CreateSkeletonRootInput = {
     title: string;
     description: string;
 }
 
+// Lazy initialization to ensure env vars are loaded
+const getModel = () => new ChatOpenAI({
+    model: "gpt-4o-mini",
+    temperature: 0
+}).withStructuredOutput(createSkeletonRootSchema);
+
 
 export const createSkeletonRootWithLLM = async (input: CreateSkeletonRootInput) => {
+    const skeletonRootModel = getModel();
     const prompt = await createSkeletonRootTemplate.invoke({
         title: input.title,
         description: input.description

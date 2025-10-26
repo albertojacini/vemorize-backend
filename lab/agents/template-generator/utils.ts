@@ -6,7 +6,7 @@ import { CourseSpec } from './types';
 
 // Load course specification from YAML file
 export async function loadCourseSpec(specFile: string): Promise<CourseSpec> {
-  const filePath = path.resolve(process.cwd(), 'specs', specFile);
+  const filePath = path.resolve(process.cwd(), specFile);
   const content = fs.readFileSync(filePath, 'utf-8');
   return parseYaml(content) as CourseSpec;
 }
