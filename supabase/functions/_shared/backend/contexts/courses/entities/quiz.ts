@@ -1,7 +1,7 @@
 // Quiz domain entities for the Learning bounded context
 
 import { CourseTree } from './course-tree.ts';
-import { v4 as uuidv4 } from 'uuid';
+import { v4 as uuidv4 } from 'npm:uuid';
 
 
 const MAX_QUESTIONS_PER_SESSION = 2;
