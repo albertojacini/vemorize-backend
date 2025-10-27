@@ -1,5 +1,5 @@
-import { Annotation } from '../../../../../contexts/courses/entities/annotation.ts';
-import { AnnotationRepository } from '../../../../../contexts/courses/repositories/annotation-repository.ts';
+import { Annotation } from '../../../../../backend/contexts/courses/entities/annotation.ts';
+import { AnnotationRepository } from '../../../../../backend/contexts/courses/repositories/annotation-repository.ts';
 import { AnnotationMapper } from '../../../mappers/annotation-mapper.ts';
 import type { SupabaseClient } from '@supabase/supabase-js';
 
