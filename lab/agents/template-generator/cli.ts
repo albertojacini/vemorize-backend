@@ -1,22 +1,18 @@
 #!/usr/bin/env tsx
 
-// Load environment variables from .env.local
+// Load environment variables from .env
 import { config } from 'dotenv';
 import { resolve } from 'path';
 import { Command } from 'commander';
 
 // Load environment variables from project root
 // When run from /lab directory via npm, go up one level to project root
-const envLocalPath = resolve(process.cwd(), '../.env.local');
 const envPath = resolve(process.cwd(), '../.env');
-
-const envLocalResult = config({ path: envLocalPath });
 const envResult = config({ path: envPath });
 
 // Debug: Verify environment loading
-if (envLocalResult.error && envResult.error) {
-  console.error('Warning: Could not load .env files');
-  console.error('  .env.local:', envLocalResult.error.message);
+if (envResult.error) {
+  console.error('Warning: Could not load .env file');
   console.error('  .env:', envResult.error.message);
 }
 

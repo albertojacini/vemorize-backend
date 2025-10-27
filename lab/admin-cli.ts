@@ -19,7 +19,6 @@ import { isValidTemplateDTOFile as validateDTOFile } from './types/api-contracts
 
 // Load environment variables from project root
 // When run from /lab directory via npm, go up one level to project root
-config({ path: resolve(process.cwd(), '../.env.local') });
 config({ path: resolve(process.cwd(), '../.env') });
 
 // Configuration
@@ -47,6 +46,96 @@ program
   .description('Admin CLI for managing Vemorize resources via edge function API')
   .version('0.1.0');
 
+// Create course from template command
+program
+  .command('create-course')
+  .description('Create a course from an existing template via edge function API')
+  .argument('<templateId>', 'Template ID to create course from')
+  .argument('<title>', 'Course title')
+  .option('--description <text>', 'Course description (optional)')
+  .option('--token <jwt>', 'JWT authentication token (overrides env var)')
+  .action(async (templateId: string, title: string, options: { description?: string; token?: string }) => {
+    try {
+      console.log('');
+      log('yellow', '======================================');
+      log('yellow', 'Admin CLI - Create Course from Template');
+      log('yellow', '======================================');
+      console.log('');
+
+      // Get authentication token
+      const token = options.token || AUTH_TOKEN;
+      if (!token) {
+        log('red', '✗ No authentication token found');
+        log('blue', 'Set SUPABASE_USER_TOKEN in .env or use --token flag');
+        log('blue', 'Run: ./scripts/get-local-token.sh');
+        process.exit(1);
+      }
+
+      log('blue', `Template ID: ${templateId}`);
+      log('blue', `Course Title: ${title}`);
+      if (options.description) log('blue', `Description: ${options.description}`);
+      log('blue', `API URL: ${SUPABASE_URL}`);
+      console.log('');
+
+      // Create course from template
+      log('yellow', 'Step 1: Creating course via POST /courses?action=create-from-template...');
+
+      const requestBody = {
+        templateId,
+        title,
+        description: options.description
+      };
+
+      const courseResponse = await fetch(`${SUPABASE_URL}/functions/v1/courses?action=create-from-template`, {
+        method: 'POST',
+        headers: {
+          'Authorization': `Bearer ${token}`,
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify(requestBody),
+      });
+
+      const courseResult: ApiResponse<any> = await courseResponse.json();
+
+      if (!courseResponse.ok || !courseResult.success) {
+        log('red', `✗ Failed to create course (HTTP ${courseResponse.status})`);
+        console.log(JSON.stringify(courseResult, null, 2));
+        process.exit(1);
+      }
+
+      if (!courseResult.data) {
+        log('red', '✗ No course data in response');
+        process.exit(1);
+      }
+
+      const createdCourseId = courseResult.data.id;
+      log('green', `✓ Course created with ID: ${createdCourseId}`);
+      console.log('');
+
+      // Success summary
+      log('green', '======================================');
+      log('green', '✓ Course created successfully!');
+      log('green', '======================================');
+      console.log('');
+      console.log('Summary:');
+      console.log(`- Course ID: ${createdCourseId}`);
+      console.log(`- Title: ${courseResult.data.title}`);
+      console.log(`- Description: ${courseResult.data.description || '(none)'}`);
+      console.log(`- Template ID: ${templateId}`);
+      console.log('');
+
+    } catch (error) {
+      console.log('');
+      log('red', '✗ Error:');
+      if (error instanceof Error) {
+        console.error(error.message);
+      } else {
+        console.error(error);
+      }
+      process.exit(1);
+    }
+  });
+
 // Save template command
 program
   .command('save-template')
@@ -65,7 +154,7 @@ program
       const token = options.token || AUTH_TOKEN;
       if (!token) {
         log('red', '✗ No authentication token found');
-        log('blue', 'Set SUPABASE_USER_TOKEN in .env.local or use --token flag');
+        log('blue', 'Set SUPABASE_USER_TOKEN in .env or use --token flag');
         log('blue', 'Run: ./scripts/get-local-token.sh');
         process.exit(1);
       }

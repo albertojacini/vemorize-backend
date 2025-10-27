@@ -6,7 +6,8 @@
   "type": "module",
   "scripts": {
     "generate-template": "tsx agents/template-generator/cli.ts generate",
-    "admin": "tsx admin-cli.ts"
+    "admin": "tsx admin-cli.ts",
+    "create-course": "tsx admin-cli.ts create-course"
   },
   "keywords": [
     "vemorize",
