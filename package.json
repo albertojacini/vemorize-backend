@@ -1,0 +1,34 @@
+{
+  "name": "vemorize-backend",
+  "version": "0.1.0",
+  "description": "Supabase-based backend for the Vemorize voice memorization app",
+  "private": true,
+  "type": "module",
+  "scripts": {
+    "dev:functions": "supabase functions serve --env-file .env",
+    "dev:bootstrap": "./scripts/dev/bootstrap.sh",
+    "dev:token": "./scripts/dev/get-local-token.sh",
+    "dev:supabase": "supabase start",
+    "db:reset": "supabase db reset",
+    "db:migrate": "supabase db push",
+    "db:seed": "npm run dev:bootstrap",
+    "test:chat": "./scripts/test/test-chat-llm.sh",
+    "test:nav": "./scripts/test/test-navigation.sh",
+    "template:generate": "cd lab && npm run generate-template --",
+    "admin": "cd lab && npm run admin --",
+    "admin:save-template": "cd lab && npm run admin save-template",
+    "admin:create-course": "cd lab && npm run admin create-course",
+    "deploy": "./scripts/deploy/deploy.sh",
+    "deploy:functions": "supabase functions deploy",
+    "setup": "npm run db:reset && npm run dev:bootstrap",
+    "fresh-start": "supabase db reset && npm run dev:bootstrap"
+  },
+  "keywords": [
+    "vemorize",
+    "supabase",
+    "edge-functions",
+    "deno"
+  ],
+  "author": "",
+  "license": "UNLICENSED"
+}
