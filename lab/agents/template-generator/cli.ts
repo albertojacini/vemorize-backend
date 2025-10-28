@@ -27,7 +27,7 @@ import { graph } from './graph';
 import { SkeletonToTemplateConverter } from './converters';
 import { writeFile, mkdir } from 'fs/promises';
 import { join, dirname } from 'path';
-import type { TemplateDTOFile } from '../../types/api-contracts';
+import type { TemplateDTOFile } from '@/types/api-contracts';
 import type { CreateTemplateCommand, CreateTemplateTreeCommand } from '@/shared/contracts/base-interfaces/templates';
 
 
