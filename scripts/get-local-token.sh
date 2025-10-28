@@ -12,13 +12,32 @@ RED='\033[0;31m'
 BLUE='\033[0;34m'
 NC='\033[0m' # No Color
 
-# Configuration
-SUPABASE_URL="http://127.0.0.1:54321"
-ANON_KEY="eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZS1kZW1vIiwicm9sZSI6ImFub24iLCJleHAiOjE5ODM4MTI5OTZ9.CRXP1A7WOeoJeXxjNni43kdQwgnWNReilDMblYTn_I0"
+# Load environment variables from .env file
+SCRIPT_DIR="$(cd "$(dirname "${BASH_SOURCE[0]}")" && pwd)"
+ENV_FILE="$SCRIPT_DIR/../.env"
 
-# Default test user credentials
-EMAIL="${1:-admin@test.local}"
-PASSWORD="${2:-test123456}"
+if [ ! -f "$ENV_FILE" ]; then
+  echo -e "${RED}✗ Error: .env file not found at $ENV_FILE${NC}"
+  exit 1
+fi
+
+# Source .env file and export variables
+set -a
+source "$ENV_FILE"
+set +a
+
+# Configuration from .env
+SUPABASE_URL="${SUPABASE_URL:-http://127.0.0.1:54321}"
+ANON_KEY="${SUPABASE_ANON_KEY}"
+
+if [ -z "$ANON_KEY" ]; then
+  echo -e "${RED}✗ Error: SUPABASE_ANON_KEY not found in .env file${NC}"
+  exit 1
+fi
+
+# Test user credentials from .env or command line args
+EMAIL="${1:-${SUPABASE_TEST_USER_USERNAME:-admin@test.local}}"
+PASSWORD="${2:-${SUPABASE_TEST_USER_PASSWORD:-test123456}}"
 
 echo -e "${YELLOW}======================================${NC}"
 echo -e "${YELLOW}Getting Local Supabase Auth Token${NC}"
