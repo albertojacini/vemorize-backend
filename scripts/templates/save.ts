@@ -10,14 +10,14 @@ import { config } from 'dotenv';
 // Load environment variables from project root
 config({ path: resolve(process.cwd(), '.env') });
 
-// Import types (will be moved to root in next step)
+// Import types from root
 import type {
   TemplateDTOFile,
   ApiResponse,
   CreateTemplateResponse,
   CreateTemplateTreeResponse,
-} from '../../lab/types/api-contracts';
-import { isValidTemplateDTOFile } from '../../lab/types/api-contracts';
+} from '@/types/api-contracts';
+import { isValidTemplateDTOFile } from '@/types/api-contracts';
 
 // Configuration
 const SUPABASE_URL = process.env.SUPABASE_URL || 'http://127.0.0.1:54321';

@@ -9,8 +9,8 @@ import { resolve } from 'path';
 // Load environment variables from project root
 config({ path: resolve(process.cwd(), '.env') });
 
-// Import types (will be moved to root in next step)
-import type { ApiResponse } from '../../lab/types/api-contracts';
+// Import types from root
+import type { ApiResponse } from '@/types/api-contracts';
 
 // Configuration
 const SUPABASE_URL = process.env.SUPABASE_URL || 'http://127.0.0.1:54321';
