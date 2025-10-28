@@ -1,13 +1,12 @@
 #!/bin/bash
 # Bootstrap script for setting up Vemorize after database reset
-# This script:
-# 1. Creates/authenticates test user and gets JWT token
-# 2. Updates .env with the token
-# 3. Generates German verbs template
-# 4. Saves template to database
-# 5. Creates course from template
+# This script orchestrates modular commands (no duplication):
+# 1. Gets authentication token and updates .env
+# 2. Generates German Top 100 Verbs template
+# 3. Saves template to database
+# 4. Creates course from template
 #
-# Usage: ./scripts/bootstrap.sh
+# Usage: ./scripts/dev/bootstrap.sh
 
 set -e  # Exit on error
 
@@ -44,8 +43,8 @@ echo -e "  Supabase URL: ${SUPABASE_URL}"
 echo -e "  Test User: ${SUPABASE_TEST_USER_USERNAME}"
 echo -e ""
 
-# Step 1: Create user and get token
-echo -e "${YELLOW}Step 1: Creating test user and getting JWT token...${NC}"
+# Step 1: Get authentication token and update .env
+echo -e "${YELLOW}Step 1: Getting authentication token...${NC}"
 TOKEN_OUTPUT=$("$SCRIPT_DIR/get-local-token.sh" 2>&1)
 TOKEN_EXIT_CODE=$?
 
@@ -55,7 +54,7 @@ if [ $TOKEN_EXIT_CODE -ne 0 ]; then
   exit 1
 fi
 
-# Extract the token from the output (it's the line after "Your JWT Token:")
+# Extract the token from the output
 USER_TOKEN=$(echo "$TOKEN_OUTPUT" | grep -A1 "Your JWT Token:" | tail -n1 | xargs)
 
 if [ -z "$USER_TOKEN" ]; then
@@ -65,19 +64,14 @@ fi
 
 echo -e "${GREEN}✓ JWT token obtained${NC}"
 
-# Step 2: Update .env file with new token
-echo -e "\n${YELLOW}Step 2: Updating .env file with new token...${NC}"
+# Update .env file with new token
+echo -e "\n${YELLOW}Step 1b: Updating .env file with new token...${NC}"
 
-# Create a temporary file
 TEMP_ENV=$(mktemp)
-
-# Update or add SUPABASE_USER_TOKEN in .env
 if grep -q "^SUPABASE_USER_TOKEN=" "$ENV_FILE"; then
-  # Replace existing token
   sed "s|^SUPABASE_USER_TOKEN=.*|SUPABASE_USER_TOKEN=\"$USER_TOKEN\"|" "$ENV_FILE" > "$TEMP_ENV"
   mv "$TEMP_ENV" "$ENV_FILE"
 else
-  # Append token if it doesn't exist
   echo "SUPABASE_USER_TOKEN=\"$USER_TOKEN\"" >> "$ENV_FILE"
 fi
 
@@ -88,23 +82,22 @@ set +a
 
 echo -e "${GREEN}✓ .env file updated with new token${NC}"
 
-# Step 3: Generate German verbs template
-echo -e "\n${YELLOW}Step 3: Generating German Top 100 Verbs template...${NC}"
+# Step 2: Generate template
+echo -e "\n${YELLOW}Step 2: Generating German Top 100 Verbs template...${NC}"
 
-SPEC_FILE_FULL="$PROJECT_ROOT/lab/agents/template-generator/specs/german-top-100-verbs.yml"
-SPEC_FILE_RELATIVE="agents/template-generator/specs/german-top-100-verbs.yml"
+SPEC_FILE="lab/agents/template-generator/specs/german-top-100-verbs.yml"
 OUTPUT_DIR="$PROJECT_ROOT/lab/agents/template-generator/output"
 
-if [ ! -f "$SPEC_FILE_FULL" ]; then
-  echo -e "${RED}✗ Spec file not found: $SPEC_FILE_FULL${NC}"
+if [ ! -f "$PROJECT_ROOT/$SPEC_FILE" ]; then
+  echo -e "${RED}✗ Spec file not found: $SPEC_FILE${NC}"
   exit 1
 fi
 
-echo -e "${BLUE}Running template generator with --max-items 1...${NC}"
+echo -e "${BLUE}Calling template generator (--max-items 1 for testing)...${NC}"
 
-# Use npm run command from lab directory (npm scripts run from lab dir)
-cd "$PROJECT_ROOT/lab"
-npm run generate-template -- "$SPEC_FILE_RELATIVE" --max-items 1
+# Call modular template generation script
+cd "$PROJECT_ROOT"
+tsx scripts/templates/generate.ts "$SPEC_FILE" --max-items 1
 
 if [ $? -ne 0 ]; then
   echo -e "${RED}✗ Template generation failed${NC}"
@@ -113,8 +106,8 @@ fi
 
 echo -e "${GREEN}✓ Template generated successfully${NC}"
 
-# Step 4: Save template to database
-echo -e "\n${YELLOW}Step 4: Saving template to database...${NC}"
+# Step 3: Save template to database
+echo -e "\n${YELLOW}Step 3: Saving template to database...${NC}"
 
 # Find the generated template file
 TEMPLATE_FILE=$(find "$OUTPUT_DIR" -name "german-top-100-verbs.template.json" -type f | head -n1)
@@ -128,9 +121,9 @@ fi
 
 echo -e "${BLUE}Saving template: $TEMPLATE_FILE${NC}"
 
-# Run admin CLI to save template
-cd "$PROJECT_ROOT/lab"
-SAVE_OUTPUT=$(npm run admin -- save-template "$TEMPLATE_FILE" 2>&1)
+# Call modular save-template script
+cd "$PROJECT_ROOT"
+SAVE_OUTPUT=$(tsx scripts/templates/save.ts "$TEMPLATE_FILE" 2>&1)
 SAVE_EXIT_CODE=$?
 
 echo "$SAVE_OUTPUT"
@@ -150,17 +143,17 @@ fi
 
 echo -e "${GREEN}✓ Template saved with ID: $TEMPLATE_ID${NC}"
 
-# Step 5: Create course from template
-echo -e "\n${YELLOW}Step 5: Creating course from template...${NC}"
+# Step 4: Create course from template
+echo -e "\n${YELLOW}Step 4: Creating course from template...${NC}"
 
 COURSE_TITLE="German Top 100 Verbs - My Course"
 COURSE_DESCRIPTION="My personal course for learning the top 100 German verbs"
 
 echo -e "${BLUE}Creating course: $COURSE_TITLE${NC}"
 
-# Run admin CLI to create course
-cd "$PROJECT_ROOT/lab"
-CREATE_COURSE_OUTPUT=$(npm run admin -- create-course "$TEMPLATE_ID" "$COURSE_TITLE" --description "$COURSE_DESCRIPTION" 2>&1)
+# Call modular create-course script
+cd "$PROJECT_ROOT"
+CREATE_COURSE_OUTPUT=$(tsx scripts/courses/create-from-template.ts "$TEMPLATE_ID" "$COURSE_TITLE" --description "$COURSE_DESCRIPTION" 2>&1)
 CREATE_COURSE_EXIT_CODE=$?
 
 echo "$CREATE_COURSE_OUTPUT"
