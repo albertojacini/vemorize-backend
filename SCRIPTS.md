@@ -15,22 +15,29 @@ All scripts are accessible via **npm run** commands from the project root. This 
 ```
 scripts/
 ├── dev/                    # Development helpers
-│   ├── bootstrap.sh        # Complete database setup with test data
+│   ├── bootstrap.sh        # Complete database setup (orchestrates other scripts)
 │   └── get-local-token.sh  # Get authentication token
+├── templates/              # Template operations (TypeScript)
+│   ├── generate.ts         # Generate template (wrapper for agent)
+│   └── save.ts             # Save template to database
+├── courses/                # Course operations (TypeScript)
+│   └── create-from-template.ts  # Create course from template
 ├── test/                   # Testing scripts
-│   ├── test-chat-llm.sh    # Test chat-llm edge function
-│   └── test-navigation.sh  # Test navigation functionality
+│   ├── test-chat-llm.sh
+│   └── test-navigation.sh
 ├── db/                     # Database operations
-│   ├── migrate.sh          # Run migrations
-│   └── reset.sh            # Reset database
-└── deploy/                 # Deployment scripts
-    └── deploy.sh           # Deploy everything
+│   ├── migrate.sh
+│   └── reset.sh
+└── deploy/
+    └── deploy.sh
 
-lab/                        # TypeScript CLIs (separate package)
-├── admin-cli.ts            # Admin operations (templates, courses)
+types/                      # Shared type definitions
+└── api-contracts.ts        # API contracts used by all scripts
+
+lab/                        # Agent code ONLY
 └── agents/
     └── template-generator/
-        └── cli.ts          # AI-powered template generation
+        └── cli.ts          # AI-powered template generation agent
 ```
 
 ## Available Commands
@@ -54,15 +61,17 @@ npm run fresh-start        # Full reset and bootstrap
 
 ### Templates & Courses
 ```bash
-# Generate template from spec
-npm run template:generate specs/german-top-100-verbs.yml -- --max-items 1
+# Generate template from spec (wrapper that calls agent)
+npm run template:generate lab/agents/template-generator/specs/german-top-100-verbs.yml -- --max-items 1
 
-# Admin commands
-npm run admin save-template output/my-template.json
-npm run admin create-course <template-id> "Course Title" --description "Description"
+# Save template to database
+npm run template:save lab/agents/template-generator/output/my-template.json
 
-# Or use the admin CLI directly
-npm run admin -- <command> [options]
+# Create course from template
+npm run course:create <template-id> "Course Title" -- --description "Description"
+
+# Direct agent access (advanced)
+npm run agent:template lab/agents/template-generator/specs/my-spec.yml -- --max-items 10
 ```
 
 ### Testing
@@ -99,10 +108,10 @@ npm run dev:bootstrap
 npm run template:generate lab/agents/template-generator/specs/my-spec.yml -- --max-items 1
 
 # 2. Save template to database
-npm run admin save-template lab/agents/template-generator/output/my-template.json
+npm run template:save lab/agents/template-generator/output/my-template.json
 
 # 3. Create course from template (get template ID from previous step)
-npm run admin create-course <template-id> "My Course Title"
+npm run course:create <template-id> "My Course Title" -- --description "My description"
 ```
 
 ### Daily Development
@@ -143,18 +152,33 @@ When adding new scripts, follow this pattern:
 
 4. **Document in README.md** under "Quick Start Commands"
 
-## TypeScript CLIs (Lab Tools)
+## Organization Philosophy
 
-TypeScript CLIs in `/lab` are separate from bash scripts because they:
-- Require Node.js/TypeScript runtime
-- Have complex dependencies (LangGraph, OpenAI, etc.)
-- Are development tools, not production utilities
+### Scripts vs Agents
 
-They're still accessible via npm scripts:
-```bash
-npm run admin -- <command>           # Admin CLI
-npm run template:generate -- <spec>  # Template generator
-```
+**`/scripts`** - Operational scripts (both bash and TypeScript)
+- Template operations: `scripts/templates/save.ts`, `scripts/templates/generate.ts`
+- Course operations: `scripts/courses/create-from-template.ts`
+- Database operations: `scripts/db/migrate.sh`, `scripts/db/reset.sh`
+- Development helpers: `scripts/dev/bootstrap.sh`, `scripts/dev/get-local-token.sh`
+
+**`/lab/agents`** - ONLY agent code (AI-powered tools)
+- Template generator agent: `lab/agents/template-generator/`
+- Future agents would go here
+
+**Why separate?**
+- Clear distinction: operational scripts vs AI agents
+- Scripts are utilities you call directly
+- Agents are complex AI systems with their own internal logic
+- No duplication: scripts in `/scripts`, agents in `/lab/agents`, types in `/types`
+
+### Single Package.json
+
+All dependencies are in the root `package.json`:
+- Eliminates confusion about where dependencies live
+- Single `npm install` for everything
+- Scripts and agents both use root `node_modules/`
+- Shared types in `/types/` used by all code
 
 ## Environment Variables
 

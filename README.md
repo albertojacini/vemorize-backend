@@ -86,11 +86,13 @@ npm run fresh-start        # Full reset and bootstrap
 ### Templates & Courses
 ```bash
 # Generate template from spec
-npm run template:generate specs/german-top-100-verbs.yml -- --max-items 1
+npm run template:generate lab/agents/template-generator/specs/german-top-100-verbs.yml -- --max-items 1
 
-# Admin commands
-npm run admin save-template output/my-template.json
-npm run admin create-course <template-id> "Course Title" --description "Description"
+# Save template to database
+npm run template:save lab/agents/template-generator/output/my-template.json
+
+# Create course from template
+npm run course:create <template-id> "Course Title" -- --description "Description"
 ```
 
 ### Testing
